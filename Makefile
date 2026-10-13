@@ -21,8 +21,14 @@ clean:
 docker-build:
 	docker build -t lab-cloud:latest .
 
+docker-rebuild:
+	docker compose build --no-cache
+
 docker-up:
-	docker compose up -d
+	docker compose up -d --build
 
 docker-down:
 	docker compose down
+
+docker-logs:
+	docker compose logs -f app
