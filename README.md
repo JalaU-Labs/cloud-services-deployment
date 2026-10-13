@@ -316,6 +316,54 @@ with a single IP, the Database Access user, and the successful connection.
 
 ---
 
+## Reflection: Cloud vs. Local Docker
+
+The two approaches complement each other rather than compete.
+
+### Advantages of using cloud services
+
+- **Elasticity:** resources scale on demand without hardware procurement.
+- **Managed operations:** backups, monitoring, and patching are handled by the
+  provider.
+- **Global reach:** services can be deployed close to the end users.
+- **Pay-as-you-go:** no upfront capital expenditure.
+
+### Disadvantages of using cloud services
+
+- **Recurring cost:** charges accumulate as usage grows, especially outside the
+  free tier.
+- **Vendor lock-in:** migrating away from a provider's managed services can be
+  expensive.
+- **Reduced control:** the OS and the runtime are configured by the provider.
+- **Network dependency:** access requires a stable Internet connection.
+- **Security surface:** misconfigured access rules are a common source of
+  leaks.
+
+### Advantages of local Docker simulation
+
+- **Zero cost:** everything runs on the developer's machine.
+- **Full control:** the OS, the runtime, and the network are configurable.
+- **Offline work:** no Internet connection is required.
+- **Fast iteration:** containers start in seconds.
+- **Reproducibility:** the same `docker-compose.yml` runs identically on any
+  host with Docker.
+
+### Disadvantages of local Docker simulation
+
+- **No real cloud behavior:** load balancing, autoscaling, and geographic
+  redundancy are not exercised.
+- **Local resource limits:** CPU, memory, and disk depend on the developer's
+  machine.
+- **Manual security:** firewalls, TLS, and secret rotation must be implemented
+  by hand.
+- **No SLA:** the local environment offers no availability guarantee.
+
+The cloud is preferable for production workloads that require resilience and
+scale. Docker is preferable for development, testing, and teaching, where cost
+and iteration speed matter more than availability.
+
+---
+
 ## Theoretical Questions
 
 ### In which category does MongoDB Atlas fit and why?
