@@ -28,7 +28,7 @@ services:
       mongo:
         condition: service_healthy
     environment:
-      MONGODB_URI: ${MONGODB_URI:-mongodb://admin:changeme@mongo:27017/?authSource=admin}
+      MONGODB_URI: mongodb://${MONGO_ROOT_USER:-admin}:${MONGO_ROOT_PASSWORD:-changeme}@mongo:27017/?authSource=admin
       MONGODB_DB: ${MONGODB_DB:-lab_cloud}
       APP_ENV: ${APP_ENV:-development}
     ports:
