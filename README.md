@@ -507,8 +507,27 @@ Tests are written with `pytest` and include coverage reporting via
 make test
 ```
 
-The coverage report is printed to the terminal. Current coverage focuses on the
-FastAPI application and the package metadata.
+The coverage report is printed to the terminal. Coverage for the business
+logic (`app.py`, `routes/contacts.py`, `schemas.py`) is at 100%. The entry
+point `__main__.py` is excluded because it only invokes uvicorn.
+
+## Lab Completion Status
+
+The lab was completed end-to-end:
+
+- The FastAPI application runs locally and on EC2.
+- The MongoDB Atlas M0 cluster stores the contacts created through the API.
+- The local Docker Compose environment simulates the cloud deployment for
+  offline development.
+- Both CI/CD pipelines (GitLab and GitHub) run lint and tests on every push.
+- The EC2 instance uses a dedicated Security Group with inbound rules
+  restricted to the developer's public IP on ports 22 and 8000 only.
+- MongoDB Atlas Network Access is restricted to the developer's IP and the
+  EC2 instance's public IP.
+- All credentials are stored in a git-ignored `.env` file with `chmod 600`
+  permissions.
+
+Screenshots of each step are stored under `docs/screenshots/`.
 
 ---
 
