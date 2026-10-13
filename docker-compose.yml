@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: lab-cloud-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
+      MONGO_INITDB_DATABASE: ${MONGODB_DB:-lab_cloud}
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lab-cloud-app
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: ${MONGODB_URI:-mongodb://admin:changeme@mongo:27017/?authSource=admin}
+      MONGODB_DB: ${MONGODB_DB:-lab_cloud}
+      APP_ENV: ${APP_ENV:-development}
+    ports:
+      - "127.0.0.1:8000:8000"
+
+volumes:
+  mongo_data:
+    driver: local
