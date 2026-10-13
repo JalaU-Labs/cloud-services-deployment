@@ -1,6 +1,6 @@
 """Contacts API endpoints."""
 
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, status
 from pymongo.database import Database
@@ -10,21 +10,18 @@ from lab_cloud.schemas import ContactIn, ContactOut
 
 router = APIRouter(prefix="/contacts", tags=["contacts"])
 
+DatabaseDep = Annotated[Database[Any], Depends(get_database)]
+
 
 @router.post("", response_model=ContactOut, status_code=status.HTTP_201_CREATED)
-def create_contact(
-    payload: ContactIn,
-    db: Database[Any] = Depends(get_database),
-) -> ContactOut:
+def create_contact(payload: ContactIn, db: DatabaseDep) -> ContactOut:
     """Insert a new contact into the collection."""
     result = db["contacts"].insert_one(payload.model_dump())
     return ContactOut(id=str(result.inserted_id), **payload.model_dump())
 
 
 @router.get("", response_model=list[ContactOut])
-def list_contacts(
-    db: Database[Any] = Depends(get_database),
-) -> list[ContactOut]:
+def list_contacts(db: DatabaseDep) -> list[ContactOut]:
     """Return all contacts stored in the collection."""
     return [
         ContactOut(id=str(doc["_id"]), name=doc["name"], email=doc["email"])
