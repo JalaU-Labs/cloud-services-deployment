@@ -12,17 +12,19 @@ and applies security best practices for remote access and credential management.
 1. [Project Description](#project-description)
 2. [Prerequisites](#prerequisites)
 3. [Quick Start](#quick-start)
-4. [Project Structure](#project-structure)
-5. [Local Cloud Simulation with Docker](#local-cloud-simulation-with-docker)
-6. [Activity 1 - Cloud Services on AWS Educate](#activity-1---cloud-services-on-aws-educate)
-7. [Activity 2 - MongoDB Atlas Free Tier Cluster](#activity-2---mongodb-atlas-free-tier-cluster)
-8. [Theoretical Questions](#theoretical-questions)
-9. [Security Best Practices](#security-best-practices)
-10. [Cost Safety on AWS](#cost-safety-on-aws)
-11. [CI/CD Pipelines](#cicd-pipelines)
-12. [Testing](#testing)
-13. [License](#license)
-14. [Author](#author)
+4. [Documentation](#documentation)
+5. [Project Structure](#project-structure)
+6. [Local Cloud Simulation with Docker](#local-cloud-simulation-with-docker)
+7. [Activity 1 - Cloud Services on AWS Educate](#activity-1---cloud-services-on-aws-educate)
+8. [Activity 2 - MongoDB Atlas Free Tier Cluster](#activity-2---mongodb-atlas-free-tier-cluster)
+9. [Reflection: Cloud vs. Local Docker](#reflection-cloud-vs-local-docker)
+10. [Theoretical Questions](#theoretical-questions)
+11. [Security Best Practices](#security-best-practices)
+12. [Cost Safety on AWS](#cost-safety-on-aws)
+13. [CI/CD Pipelines](#cicd-pipelines)
+14. [Testing](#testing)
+15. [License](#license)
+16. [Author](#author)
 
 ---
 
@@ -87,10 +89,35 @@ make docker-down
 
 ---
 
+## Documentation
+
+Detailed guides are available under `docs/`:
+
+| Document | Purpose |
+|---|---|
+| [01 - Docker Installation](docs/01-docker-installation.md) | Install Docker Engine and Compose on Arch, Ubuntu, and Amazon Linux. |
+| [02 - AWS EC2 Setup](docs/02-aws-ec2-setup.md) | Create the EC2 instance and configure Security Groups safely. |
+| [03 - MongoDB Atlas Setup](docs/03-mongodb-atlas-setup.md) | Create the free cluster, configure Network and Database Access. |
+| [04 - Deploy on EC2](docs/04-deploy-on-ec2.md) | Deploy the API on EC2 connected to MongoDB Atlas. |
+| [05 - Local Development](docs/05-local-development.md) | Work on the project locally, run tests, use Docker Compose. |
+| [06 - Security Hardening](docs/06-security-hardening.md) | Consolidated security practices and incident response. |
+| [07 - Troubleshooting](docs/07-troubleshooting.md) | Common errors and their fixes. |
+
+---
+
 ## Project Structure
 
 ```
 .
+├── docs/
+│   ├── screenshots/
+│   ├── 01-docker-installation.md
+│   ├── 02-aws-ec2-setup.md
+│   ├── 03-mongodb-atlas-setup.md
+│   ├── 04-deploy-on-ec2.md
+│   ├── 05-local-development.md
+│   ├── 06-security-hardening.md
+│   └── 07-troubleshooting.md
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
@@ -99,9 +126,16 @@ make docker-down
 │   └── lab_cloud/
 │       ├── __init__.py
 │       ├── __main__.py
-│       └── app.py
+│       ├── app.py
+│       ├── config.py
+│       ├── db.py
+│       ├── schemas.py
+│       └── routes/
+│           ├── __init__.py
+│           └── contacts.py
 ├── tests/
 │   ├── test_app.py
+│   ├── test_db.py
 │   └── test_placeholder.py
 ├── .dockerignore
 ├── .env.example
