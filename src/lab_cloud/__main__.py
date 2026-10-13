@@ -3,7 +3,7 @@
 import uvicorn
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     """Run the FastAPI application with uvicorn."""
     uvicorn.run(
         "lab_cloud.app:app",
@@ -14,5 +14,5 @@ def main() -> None:
     )
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()
