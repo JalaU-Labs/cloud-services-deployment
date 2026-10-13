@@ -1,0 +1,35 @@
+# Git metadata
+.git
+.gitignore
+
+# CI configurations
+.github
+.gitlab-ci.yml
+
+# Python artifacts
+__pycache__
+*.py[cod]
+*.egg-info
+.venv
+.pytest_cache
+.ruff_cache
+.coverage
+htmlcov
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE and editors
+.idea
+.vscode
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+*.md
+!README.md
