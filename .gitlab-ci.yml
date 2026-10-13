@@ -2,17 +2,25 @@ stages:
   - lint
   - test
 
+default:
+  image: python:3.14-slim
+
 variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  UV_CACHE_DIR: "$CI_PROJECT_DIR/.uv-cache"
+  UV_PYTHON: "3.14"
 
 cache:
+  key:
+    files:
+      - uv.lock
   paths:
-    - .cache/pip/
-    - .venv/
+    - .uv-cache/
 
 before_script:
+  - apt-get update && apt-get install -y --no-install-recommends curl ca-certificates git
   - curl -LsSf https://astral.sh/uv/install.sh | sh
-  - export PATH="$HOME/.cargo/bin:$PATH"
+  - export PATH="$HOME/.local/bin:$PATH"
   - uv sync --extra dev
 
 lint:
@@ -26,7 +34,5 @@ test:
     - uv run pytest
   artifacts:
     when: always
-    reports:
-      junit: report.xml
     paths:
       - htmlcov/
