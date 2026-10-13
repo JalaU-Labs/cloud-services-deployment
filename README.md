@@ -130,6 +130,13 @@ environment locally:
 Both services expose their ports only on `127.0.0.1`, never on `0.0.0.0`, to
 prevent unintended network exposure.
 
+Note that the `app` container is configured to reach the local `mongo`
+container through its internal hostname (`mongo:27017`). The `MONGODB_URI`
+variable defined in the host `.env` file is intentionally **not** forwarded
+to the container, because it points to MongoDB Atlas and would bypass the
+local simulation. To test the application against MongoDB Atlas, run it
+outside Docker with `make run`, which loads the `.env` file directly.
+
 Run the environment:
 
 ```bash
