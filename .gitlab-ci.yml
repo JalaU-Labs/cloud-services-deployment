@@ -1,0 +1,32 @@
+stages:
+  - lint
+  - test
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip/
+    - .venv/
+
+before_script:
+  - curl -LsSf https://astral.sh/uv/install.sh | sh
+  - export PATH="$HOME/.cargo/bin:$PATH"
+  - uv sync --extra dev
+
+lint:
+  stage: lint
+  script:
+    - uv run ruff check .
+
+test:
+  stage: test
+  script:
+    - uv run pytest
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+    paths:
+      - htmlcov/
